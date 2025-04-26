@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Converter Pro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        #drop-area {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #drop-area.highlight {
+            border-color: purple;
+        }
+        #file-input {
+            display: none;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        #progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+        progress {
+            width: 100%;
+        }
+        #output {
+            margin-top: 20px;
+        }
+        .format-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .format-option {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .format-option:hover {
+            background: #f0f0f0;
+        }
+        .format-option.selected {
+            background: #4CAF50;
+            color: white;
+            border-color: #45a049;
+        }
+        .format-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Converter Pro</h1>
+        <p>Convert between various video formats directly in your browser</p>
+        
+        <div id="drop-area">
+            <p>Drag & drop video file here or</p>
+            <button id="file-btn">Select File</button>
+            <input type="file" id="file-input" accept="video/*">
+        </div>
+        
+        <div id="file-info"></div>
+        
+        <h3>Output Format:</h3>
+        <div class="format-options" id="format-options">
+            <div class="format-option" data-format="mp4">
+                <div class="format-icon">🎥</div>
+                <div>MP4</div>
+                <small>(H.264/AAC)</small>
+            </div>
+            <div class="format-option" data-format="webm">
+                <div class="format-icon">🌐</div>
+                <div>WebM</div>
+                <small>(VP8/Vorbis)</small>
+            </div>
+            <div class="format-option" data-format="mov">
+                <div class="format-icon">🍎</div>
+                <div>MOV</div>
+                <small>(QuickTime)</small>
+            </div>
+            <div class="format-option" data-format="avi">
+                <div class="format-icon">📼</div>
+                <div>AVI</div>
+                <small>(Xvid/MP3)</small>
+            </div>
+            <div class="format-option" data-format="mkv">
+                <div class="format-icon">📦</div>
+                <div>MKV</div>
+                <small>(Matroska)</small>
+            </div>
+            <div class="format-option" data-format="flv">
+                <div class="format-icon">⚡</div>
+                <div>FLV</div>
+                <small>(Flash)</small>
+            </div>
+            <div class="format-option" data-format="wmv">
+                <div class="format-icon">🪟</div>
+                <div>WMV</div>
+                <small>(Windows Media)</small>
+            </div>
+            <div class="format-option" data-format="gif">
+                <div class="format-icon">🖼️</div>
+                <div>GIF</div>
+                <small>(Animated)</small>
+            </div>
+        </div>
+        
+        <div id="quality-container" style="margin: 15px 0;">
+            <label for="quality-select">Quality:</label>
+            <select id="quality-select">
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+            </select>
+        </div>
+        
+        <button id="convert-btn" disabled>Convert</button>
+        
+        <div id="progress-container">
+            <p>Converting... <span id="progress-text">0%</span></p>
+            <progress id="progress-bar" value="0" max="100"></progress>
+        </div>
+        
+        <div id="output"></div>
+    </div>
+
+    <!-- Load FFmpeg -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
